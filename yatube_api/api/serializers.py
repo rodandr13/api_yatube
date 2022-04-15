@@ -40,4 +40,3 @@ class PostSerializer(serializers.ModelSerializer):
             'comments',
         )
         model = Post
-
