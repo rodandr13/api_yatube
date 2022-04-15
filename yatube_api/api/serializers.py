@@ -6,7 +6,7 @@ from posts.models import Post, Group, Comment
 class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
-        fields = ('title', 'slug', 'description')
+        fields = '__all__'
         model = Group
 
 
@@ -29,14 +29,6 @@ class PostSerializer(serializers.ModelSerializer):
     )
     comments = CommentSerializer(read_only=True, many=True)
 
-    def create(self, validated_data):
-        if 'group' not in self.initial_data:
-            post = Post.objects.create(**validated_data)
-            return post
-        group = validated_data.pop('group')
-        post = Post.objects.create(**validated_data, group=group)
-        return post
-
     class Meta:
         fields = (
             'id',
@@ -45,6 +37,7 @@ class PostSerializer(serializers.ModelSerializer):
             'image',
             'group',
             'pub_date',
-            'comments'
+            'comments',
         )
         model = Post
+
